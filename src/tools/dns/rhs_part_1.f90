@@ -138,7 +138,7 @@ subroutine RHS_PART_1()
                          - l_txc(i, 3)*delta_inv4/(cosh(l_txc(i, 2)*delta_inv2)**2)
         end do
 
-    ! case (PART_TYPE_NEW_CASES)
+    
     case (PART_TYPE_TINIA_1)
         ! call PARTICLE_TINIA_RHS_1(l_hq)
 
