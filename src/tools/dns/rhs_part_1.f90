@@ -19,6 +19,7 @@ subroutine RHS_PART_1()
     use OPR_PARTIAL
     use FI_GRADIENT_EQN
     use PARTICLE_TINIA
+    use TIME
 
     implicit none
 
@@ -92,7 +93,13 @@ subroutine RHS_PART_1()
         nvar = nvar + 1; data(nvar)%field(1:imax, 1:jmax, 1:kmax) => txc(:, 4); data_out(nvar)%field => l_txc(:, 4)
         l_txc(:, 1:4) = 0.0_wp
 
-        ! case (PART_TYPE_NEW_CASES)
+    case (PART_TYPE_TINIA_1)
+        nvar = nvar + 1; data(nvar)%field(1:imax, 1:jmax, 1:kmax) => q(:, 1); data_out(nvar)%field => l_txc(:, 1)
+        nvar = nvar + 1; data(nvar)%field(1:imax, 1:jmax, 1:kmax) => q(:, 2); data_out(nvar)%field => l_txc(:, 2)
+        nvar = nvar + 1; data(nvar)%field(1:imax, 1:jmax, 1:kmax) => q(:, 3); data_out(nvar)%field => l_txc(:, 3)
+        nvar = nvar + 1; data(nvar)%field(1:imax, 1:jmax, 1:kmax) => s(:, 1); data_out(nvar)%field => l_txc(:, 4)        
+        nvar = nvar + 1; data(nvar)%field(1:imax, 1:jmax, 1:kmax) => s(:, 2); data_out(nvar)%field => l_txc(:, 5)        
+        l_txc(:, 1:5) = 0.0_wp  ! The interpolation routine adds on top of previous data
 
     end select
 
@@ -140,7 +147,7 @@ subroutine RHS_PART_1()
 
     
     case (PART_TYPE_TINIA_1)
-        ! call PARTICLE_TINIA_RHS_1(l_hq)
+         call PARTICLE_TINIA_RHS_1(l_hq)
 
     end select
 

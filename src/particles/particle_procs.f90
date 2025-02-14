@@ -130,8 +130,10 @@ contains
 
             ! case (PART_TYPE_NEW_CASES)
         case (PART_TYPE_TINIA_1)
-            ! call PARTICLE_TINIA_READBLOCK(bakfile, inifile, block)
-
+            call PARTICLE_TINIA_READBLOCK(bakfile, inifile, block)
+            inb_part = inb_part + 9   
+            inb_part_array = inb_part
+            inb_part_txc = 5 
         end select
 
 #ifdef USE_MPI

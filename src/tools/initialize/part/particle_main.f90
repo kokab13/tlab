@@ -278,7 +278,7 @@ contains
 
            
         case (PART_TYPE_TINIA_1)
-            ! call PARTICLE_TINIA_INITIALIZE()
+            call PARTICLE_TINIA_INITIALIZE()
 
         end select
 
