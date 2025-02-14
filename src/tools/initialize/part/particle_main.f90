@@ -276,7 +276,7 @@ contains
 
             end if
 
-            ! case (PART_TYPE_NEW_CASES)
+           
         case (PART_TYPE_TINIA_1)
             ! call PARTICLE_TINIA_INITIALIZE()
 
