@@ -114,7 +114,7 @@ contains
         use TLabMPI_VARS
         use PARTICLE_ARRAYS, only: ims_np_all
 #endif
-        ! use PARTICLE_TINIA
+        use PARTICLE_TINIA
         use IO_FIELDS
         implicit none
 

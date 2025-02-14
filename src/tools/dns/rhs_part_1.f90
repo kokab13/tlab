@@ -18,7 +18,7 @@ subroutine RHS_PART_1()
     use Radiation
     use OPR_PARTIAL
     use FI_GRADIENT_EQN
-    ! use PARTICLE_TINIA
+    use PARTICLE_TINIA
 
     implicit none
 

@@ -26,6 +26,7 @@ program DNS
     use PARTICLE_VARS
     use PARTICLE_ARRAYS
     use PARTICLE_PROCS
+    use PARTICLE_TINIA
     use DNS_LOCAL
     use DNS_ARRAYS
     use TIME

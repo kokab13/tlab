@@ -23,7 +23,7 @@ contains
     ! ###################################################################
     ! ###################################################################
     subroutine Particle_Initialize_Parameters(inifile)
-        ! use PARTICLE_TINIA
+        use PARTICLE_TINIA
 
         character(len=*) inifile
 
