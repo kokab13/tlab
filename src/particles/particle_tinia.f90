@@ -134,13 +134,13 @@ module PARTICLE_TINIA
        call TLab_Write_ASCII(bakfile, '#mixRatio=<value>')
        call TLab_Write_ASCII(bakfile, '#Conductivity=<value>')
 
-       call ScanFile_Char(bakfile, inifile, block, 'Diameter', '0.0', d_p)
-       call ScanFile_Char(bakfile, inifile, block, 'TemperatureP', '1.0', T_p)
-       call ScanFile_Char(bakfile, inifile, block, 'DropletDensity', '0.0', rho_l)
-       call ScanFile_Char(bakfile, inifile, block, 'IceDensity', '0.0', rho_ice)
-       call ScanFile_Char(bakfile, inifile, block, 'ParHeatCoeff', '0.0', Cp_p)
-       call ScanFile_Char(bakfile, inifile, block, 'mixRatio', '0.0', mix) 
-       call ScanFile_Char(bakfile, inifile, block, 'Conductivity', '0.0', K_f)   
+       call ScanFile_Real(bakfile, inifile, block, 'Diameter', '0.0', d_p)
+       call ScanFile_Real(bakfile, inifile, block, 'TemperatureP', '1.0', T_p)
+       call ScanFile_Real(bakfile, inifile, block, 'DropletDensity', '0.0', rho_l)
+       call ScanFile_Real(bakfile, inifile, block, 'IceDensity', '0.0', rho_ice)
+       call ScanFile_Real(bakfile, inifile, block, 'ParHeatCoeff', '0.0', Cp_p)
+       call ScanFile_Real(bakfile, inifile, block, 'mixRatio', '0.0', mix) 
+       call ScanFile_Real(bakfile, inifile, block, 'Conductivity', '0.0', K_f)   
 
        return
    end subroutine PARTICLE_TINIA_READBLOCK
