@@ -245,7 +245,7 @@ module PARTICLE_TINIA
           ! equation dv_p/dt = 1/responseTime (u-v) in x, y, z 
           l_hq(i,4) =  l_hq(i,4) + dummy_mp * FD_x_i 
           
-          l_hq(i,5) =  l_hq(i,5) + dummy_mp * FD_y_i                                                                  !- 9.8  !at this stage, no gravity
+          l_hq(i,5) =  l_hq(i,5) + dummy_mp * FD_y_i - 9.8                                                             !gravity included
           
           l_hq(i,6) =  l_hq(i,6) + dummy_mp * FD_z_i 
           
