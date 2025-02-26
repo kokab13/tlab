@@ -45,6 +45,9 @@ module PARTICLE_TINIA
    real(wp) :: dummyT_i                   ! 1/tau_T
    real(wp) :: dummy_mp                   ! 1/m_p
    real(wp) :: d_p                        ! particle diameter
+   real(wp) :: d_mean                     ! particle diameter, in case of uniform distribution
+   real(wp) :: d_median                   ! particle diameter, in case of Rosin-Rammler distribution
+   real(wp) :: m                          ! spread parameter, in case of Rosin-Rammler distribution   
    real(wp) :: T_p                        ! particle temperature
    real(wp) :: rho_l                      ! luiquid droplet density
    real(wp) :: rho_ice                    ! ice density
@@ -117,6 +120,11 @@ module PARTICLE_TINIA
    real(wp) :: relaxation_time
 
    public :: np_ice
+
+       integer, parameter :: PART_DiameterSizeDistribution_uni = 0
+       integer, parameter :: PART_DiameterSizeDistribution_RR = 1
+       integer(wi) :: imode = PART_DiameterSizeDistribution_uni
+
    contains
    
    !########################################################################
@@ -126,21 +134,31 @@ module PARTICLE_TINIA
        use PROFILES
        use TLab_WorkFlow, only: TLab_Write_ASCII        
        character(len=*), intent(in) :: bakfile, inifile, block
-       
+        character(len=50) :: sRes       
 
-       call TLab_Write_ASCII(bakfile, '#Diameter=<value>')
        call TLab_Write_ASCII(bakfile, '#ParDensity=<value>')
        call TLab_Write_ASCII(bakfile, '#ParHeatCoeff=<value>')
        call TLab_Write_ASCII(bakfile, '#mixRatio=<value>')
        call TLab_Write_ASCII(bakfile, '#Conductivity=<value>')
+       call TLab_Write_ASCII(bakfile, '#DiameterSizeDistribution=<value>')
+       call TLab_Write_ASCII(bakfile, '#MeanDiameter=<value>')
+       call TLab_Write_ASCII(bakfile, '#MedianDiameter=<value>')
+       call TLab_Write_ASCII(bakfile, '#SpreadParameter=<value>')
 
-       call ScanFile_Real(bakfile, inifile, block, 'Diameter', '0.0', d_p)
+
        call ScanFile_Real(bakfile, inifile, block, 'TemperatureP', '1.0', T_p)
        call ScanFile_Real(bakfile, inifile, block, 'DropletDensity', '0.0', rho_l)
        call ScanFile_Real(bakfile, inifile, block, 'IceDensity', '0.0', rho_ice)
        call ScanFile_Real(bakfile, inifile, block, 'ParHeatCoeff', '0.0', Cp_p)
        call ScanFile_Real(bakfile, inifile, block, 'mixRatio', '0.0', mix) 
-       call ScanFile_Real(bakfile, inifile, block, 'Conductivity', '0.0', K_f)   
+       call ScanFile_Real(bakfile, inifile, block, 'Conductivity', '0.0', K_f)
+       call ScanFile_Char(bakfile, inifile, block, 'DiameterSizeDistribution', 'Uniform', sRes)
+        if (trim(adjustl(sRes)) == 'Uniform') then; imode = PART_DiameterSizeDistribution_uni
+        elseif (trim(adjustl(sRes)) == 'Rosin-Rammler') then; imode = PART_DiameterSizeDistribution_RR
+        end if   
+       call ScanFile_Real(bakfile, inifile, block, 'MeanDiameter', '0.0', d_mean)   
+       call ScanFile_Real(bakfile, inifile, block, 'MedianDiameter', '0.0', d_median) 
+       call ScanFile_Real(bakfile, inifile, block, 'SpreadParameter', '0.0', m)
 
        return
    end subroutine PARTICLE_TINIA_READBLOCK
@@ -151,9 +169,18 @@ module PARTICLE_TINIA
    implicit none
 
    integer(wi) :: j
-
+   real(wp) :: xi
+   integer :: unit_number
 
      do j = 1, l_g%np
+
+      select case (imode)
+         case(PART_DiameterSizeDistribution_RR)
+            call RANDOM_NUMBER(xi)
+            d_p = d_median * (-log(1.0 - xi))**(1.0 / m)
+         case (PART_DiameterSizeDistribution_uni)
+            d_p = d_mean
+         end select      
 
              l_q(j, 4) = 0.0_wp
              l_q(j, 5) = 0.0_wp
