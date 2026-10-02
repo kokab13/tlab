@@ -5,7 +5,7 @@ module PARTICLE_TINIA
    use PARTICLE_TYPES, only: particle_dt
    use PARTICLE_VARS
    use PARTICLE_ARRAYS
-   use TLAB_VARS, only: visc
+   !use TLAB_VARS, only: visc
    use TIME
 
    implicit none
@@ -118,6 +118,7 @@ module PARTICLE_TINIA
    real(wp) :: mix                        ! water vapor mixing ratio
    real(wp) :: dt_lag
    real(wp) :: relaxation_time
+   real(wp) :: visc
 
    public :: np_ice
 
@@ -242,6 +243,7 @@ module PARTICLE_TINIA
        rho_air = 1.293            ! [kg/m³], density of air
        Rd = 287.052874            ! [J/K.kg], individual gas constant for dry air
        cp_air = 1000.0            ! [J/kg.K]
+       visc = 1.5e-5
        !########################################################################
 
       do i = 1, l_g%np
