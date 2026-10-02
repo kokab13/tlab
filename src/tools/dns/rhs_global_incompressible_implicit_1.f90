@@ -199,7 +199,7 @@ subroutine RHS_GLOBAL_INCOMPRESSIBLE_IMPLICIT_1(kex, kim, kco, &
     call OPR_PARTIAL_Z(OPR_P2_P1, imax, jmax, kmax, bcs, g(3), u, tmp1, tmp3)
 
 ! -----------------------------------------------------------------------
-! Buoyancy. Remember that buoyancy%vector contains the Froude # already.
+! Buoyancy. Remember that buoyancy%vector contains the e # already.
 ! -----------------------------------------------------------------------
     if (buoyancy%active(1)) then
         call Gravity_Buoyancy(buoyancy, imax, jmax, kmax, s, wrk3d, bbackground)
